@@ -11,4 +11,5 @@ public class CovidCoreConfiguration {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
 }

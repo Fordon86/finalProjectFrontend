@@ -55,5 +55,4 @@ public class MainView extends VerticalLayout {
 /*    private void update() {
         grid.setItems(bookService.findByTitle(filter.getValue()));
     }*/
-
 }

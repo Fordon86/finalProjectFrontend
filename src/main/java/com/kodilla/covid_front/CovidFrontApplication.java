@@ -13,7 +13,6 @@ public class CovidFrontApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CovidFrontApplication.class, args);
-
     }
 
 }

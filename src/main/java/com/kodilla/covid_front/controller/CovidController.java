@@ -20,4 +20,5 @@ public class CovidController {
         return covidClient.getCovidGrow();
     }
 
+
 }

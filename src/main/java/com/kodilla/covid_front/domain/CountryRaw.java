@@ -62,4 +62,5 @@ public class CountryRaw {
         result = 31 * result + (covidGrow != null ? covidGrow.hashCode() : 0);
         return result;
     }
+
 }

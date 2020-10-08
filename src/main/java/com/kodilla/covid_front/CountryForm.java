@@ -48,5 +48,4 @@ public class CountryForm extends FormLayout {
         mainView.refresh();
     }
 
-
 }
