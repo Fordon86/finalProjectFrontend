@@ -1,6 +1,5 @@
 package com.kodilla.covid_front;
 
-import com.kodilla.covid_front.client.CovidClient;
 import com.kodilla.covid_front.domain.CountryRaw;
 import com.kodilla.covid_front.service.CountryRawService;
 import com.vaadin.flow.component.button.Button;
@@ -10,13 +9,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.web.client.RestTemplate;
 
 @Route
 public class MainView extends VerticalLayout {
-
-    @Autowired
-    private CovidClient covidClient;
 
     private CountryRawService countryRawService = CountryRawService.getInstance();
     private Grid grid = new Grid<>(CountryRaw.class);
@@ -34,7 +30,6 @@ public class MainView extends VerticalLayout {
         passwordField.setClearButtonVisible(true);
         grid.setColumns("countryType", "date", "covidGrow");
         HorizontalLayout toolbar = new HorizontalLayout(loginField, passwordField, loginButton);
-        loginButton.addClickListener(event -> loadCovidGrow() );
         HorizontalLayout mainContent = new HorizontalLayout(form);
         mainContent.setSizeFull();
         grid.setSizeFull();
@@ -44,15 +39,8 @@ public class MainView extends VerticalLayout {
         setSizeFull();
     }
 
-    private void loadCovidGrow() {
-        covidClient.getCovidGrow();
-    }
-
     public void refresh() {
         grid.setItems(countryRawService.getCountryRawSet());
     }
 
-/*    private void update() {
-        grid.setItems(bookService.findByTitle(filter.getValue()));
-    }*/
 }
