@@ -1,7 +1,6 @@
 package com.kodilla.covid_front.service;
 
 import com.kodilla.covid_front.domain.CountryRaw;
-import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;

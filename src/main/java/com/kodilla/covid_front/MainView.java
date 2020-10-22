@@ -14,22 +14,44 @@ import org.springframework.web.client.RestTemplate;
 @Route
 public class MainView extends VerticalLayout {
 
+/*    @Autowired
+    private RestTemplate restTemplate;*/
+
     private CountryRawService countryRawService = CountryRawService.getInstance();
     private Grid grid = new Grid<>(CountryRaw.class);
     private CountryForm form = new CountryForm(this);
     private Button loginButton = new Button("LOGIN");
+    private Button refreshButton = new Button("REFRESH");
+    private Button addUser = new Button("ADD USER");
     private TextField loginField = new TextField();
     private TextField passwordField = new TextField();
+    private TextField addNewUser = new TextField();
+    private TextField setPassword = new TextField();
 
     public MainView() {
+        grid.setVisible(false);
+        form.setVisible(false);
+        refreshButton.setVisible(false);
+        addNewUser.setVisible(false);
+        setPassword.setVisible(false);
 //        loginButton.addClickListener(e -> {grid.asSingleSelect().clear();
-//        form.setCountry(new CountryForm());});
+        loginButton.addClickListener(e -> {grid.setVisible(true);
+            form.setVisible(true);
+            refreshButton.setVisible(true);
+            refreshButton.setVisible(true);
+            addUser.setVisible(false);});
+        addUser.addClickListener(e -> {addNewUser.setVisible(true);
+            setPassword.setVisible(true);});
         loginField.setPlaceholder("Enter login");
         loginField.setClearButtonVisible(true);
         passwordField.setPlaceholder("Enter password");
         passwordField.setClearButtonVisible(true);
+        addNewUser.setPlaceholder("Enter login");
+        addNewUser.setClearButtonVisible(true);
+        setPassword.setPlaceholder("Enter password");
+        setPassword.setClearButtonVisible(true);
         grid.setColumns("countryType", "date", "covidGrow");
-        HorizontalLayout toolbar = new HorizontalLayout(loginField, passwordField, loginButton);
+        HorizontalLayout toolbar = new HorizontalLayout(loginField, passwordField, loginButton, addUser, refreshButton, addNewUser, setPassword);
         HorizontalLayout mainContent = new HorizontalLayout(form);
         mainContent.setSizeFull();
         grid.setSizeFull();
