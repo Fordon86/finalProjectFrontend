@@ -17,9 +17,6 @@ public class MainView extends VerticalLayout {
     @Autowired
     private UserClient userClient;
 
-/*    @Autowired
-    private RestTemplate restTemplate;*/
-
     private CountryRawService countryRawService = CountryRawService.getInstance();
     private Grid grid = new Grid<>(CountryRaw.class);
     private CountryForm form = new CountryForm(this);
@@ -27,8 +24,8 @@ public class MainView extends VerticalLayout {
     private Button refreshButton = new Button("REFRESH");
     private Button addUser = new Button("ADD USER");
     private Button saveUser = new Button ("SAVE USER");
-    private TextField loginField = new TextField();
-    private TextField passwordField = new TextField();
+    private TextField userNameLoginField = new TextField();
+    private TextField userPasswordField = new TextField();
     private TextField newUserNameTextField = new TextField();
     private TextField newUserPasswordTextField = new TextField();
 
@@ -41,11 +38,13 @@ public class MainView extends VerticalLayout {
         saveUser.setVisible(false);
 //        loginButton.addClickListener(e -> {grid.asSingleSelect().clear();
         loginButton.addClickListener(e -> {
-            grid.setVisible(true);
-            form.setVisible(true);
-            refreshButton.setVisible(true);
-            refreshButton.setVisible(true);
-            addUser.setVisible(false);});
+        boolean result = userClient.validateUser(userNameLoginField.getValue(),
+                    userPasswordField.getValue());
+//            if( ) {            }
+            grid.setVisible(result);
+            form.setVisible(result);
+            refreshButton.setVisible(result);;
+            addUser.setVisible(result);});
         addUser.addClickListener(e -> {
             newUserNameTextField.setVisible(true);
             newUserPasswordTextField.setVisible(true);
@@ -56,16 +55,16 @@ public class MainView extends VerticalLayout {
             saveUser.setVisible(false);
             newUserNameTextField.setVisible(false);
             newUserPasswordTextField.setVisible(false);});
-        loginField.setPlaceholder("Enter login");
-        loginField.setClearButtonVisible(true);
-        passwordField.setPlaceholder("Enter password");
-        passwordField.setClearButtonVisible(true);
+        userNameLoginField.setPlaceholder("Enter login");
+        userNameLoginField.setClearButtonVisible(true);
+        userPasswordField.setPlaceholder("Enter password");
+        userPasswordField.setClearButtonVisible(true);
         newUserNameTextField.setPlaceholder("Enter login");
         newUserNameTextField.setClearButtonVisible(true);
         newUserPasswordTextField.setPlaceholder("Enter password");
         newUserPasswordTextField.setClearButtonVisible(true);
         grid.setColumns("countryType", "date", "covidGrow");
-        HorizontalLayout toolbar = new HorizontalLayout(loginField, passwordField, loginButton, addUser, refreshButton, newUserNameTextField, newUserPasswordTextField, saveUser);
+        HorizontalLayout toolbar = new HorizontalLayout(userNameLoginField, userPasswordField, loginButton, addUser, refreshButton, newUserNameTextField, newUserPasswordTextField, saveUser);
         HorizontalLayout mainContent = new HorizontalLayout(form);
         mainContent.setSizeFull();
         grid.setSizeFull();
