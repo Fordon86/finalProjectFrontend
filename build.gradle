@@ -25,6 +25,8 @@ dependencies {
     }
 }
 
+
+
 dependencyManagement {
     imports {
         mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
