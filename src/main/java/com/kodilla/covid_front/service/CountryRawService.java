@@ -1,11 +1,16 @@
 package com.kodilla.covid_front.service;
 
+import com.kodilla.covid_front.client.UserClient;
 import com.kodilla.covid_front.domain.CountryRaw;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class CountryRawService {
+
+    @Autowired
+    UserClient userClient;
 
     private Set<CountryRaw> countryRawSet = new HashSet<>();
     private static CountryRawService countryRawService;
@@ -28,7 +33,10 @@ public class CountryRawService {
         this.countryRawSet.remove(countryRaw);
     }
 
-    public Set<CountryRaw> getCountryRawSet() {
+    public Set getCountryRawSet() {
+        Set userFullView = new HashSet<>();
+        userFullView.add(userClient.getUserFullView("Pawel"));
+
         return countryRawSet;
     }
 

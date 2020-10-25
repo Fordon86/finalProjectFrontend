@@ -40,7 +40,7 @@ public class MainView extends VerticalLayout {
         loginButton.addClickListener(e -> {
         boolean result = userClient.validateUser(userNameLoginField.getValue(),
                     userPasswordField.getValue());
-//            if( ) {            }
+//            userClient.getUserFullView(userNameLoginField.getValue());
             grid.setVisible(result);
             form.setVisible(result);
             refreshButton.setVisible(result);;
@@ -63,7 +63,7 @@ public class MainView extends VerticalLayout {
         newUserNameTextField.setClearButtonVisible(true);
         newUserPasswordTextField.setPlaceholder("Enter password");
         newUserPasswordTextField.setClearButtonVisible(true);
-        grid.setColumns("countryType", "date", "covidGrow");
+        grid.setColumns("countryType", "date", "date_1", "date_2", "date_3", "date_4");
         HorizontalLayout toolbar = new HorizontalLayout(userNameLoginField, userPasswordField, loginButton, addUser, refreshButton, newUserNameTextField, newUserPasswordTextField, saveUser);
         HorizontalLayout mainContent = new HorizontalLayout(form);
         mainContent.setSizeFull();
@@ -72,6 +72,7 @@ public class MainView extends VerticalLayout {
 
         add(toolbar, grid, mainContent);
         setSizeFull();
+
     }
 
     public void refresh() {
