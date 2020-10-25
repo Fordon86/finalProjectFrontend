@@ -19,23 +19,22 @@ public class UserClient {
         return user;
     }
 
-    public Boolean validateUser (String userName, String userPassword) {
+    public String validateUser (String userName, String userPassword) {
         UserDto userValidate = restTemplate.getForObject(
                 "http://localhost:8081/checkUser?userName=" + userName + "&userPassword=" + userPassword,
                 UserDto.class);
         if (userValidate != null) {
-            return true;
+            return userValidate.getUserId().toString();
         }
-        return false;
+        return null;
     }
 
-    public UserFullViewDto getUserFullView (String userName) {
+    public UserFullViewDto getUserFullView (String userId) {
         UserFullViewDto userFullViewDto = restTemplate.getForObject(
-                "http://localhost:8081/checkUser?userName=" + userName,
+                "http://localhost:8081/getUserFullView?userId=" + userId,
                 UserFullViewDto.class);
         if (userFullViewDto != null) {
             userFullViewDto.getMapCountryCovidGrow().size();
-            userFullViewDto.getMapCountryCovidGrow().get(1);
             return userFullViewDto;
         }
 

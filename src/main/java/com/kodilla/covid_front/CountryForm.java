@@ -8,12 +8,10 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class CountryForm extends FormLayout {
 
-    @Autowired
-    CountryClient countryClient;
+    private CountryClient countryClient;
 
     private ComboBox<CountryType> type = new ComboBox<>("Country list");
     private Button addToList = new Button("Add country to the list");
@@ -24,14 +22,15 @@ public class CountryForm extends FormLayout {
 
     public CountryForm(){}
 
-    public CountryForm(MainView mainView) {
-/*        ComboBox<CountryDto> countryDtoComboBox = new ComboBox<>();
+    public CountryForm(MainView mainView, CountryClient countryClient) {
+        this.countryClient = countryClient;
+        ComboBox<CountryDto> countryDtoComboBox = new ComboBox<>();
         countryDtoComboBox.setItems(countryClient.getCountrys());
-        countryDtoComboBox.setItemLabelGenerator(CountryDto::getCountryName);*/
+        countryDtoComboBox.setItemLabelGenerator(CountryDto::getCountryName);
 //        setContent(new CssLayout(countryDtoComboBox));
         type.setItems(CountryType.values());
         addToList.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        add(type, addToList, deleteFromList);
+        add(addToList, deleteFromList,countryDtoComboBox);
         addToList.addClickListener(event -> save());
         deleteFromList.addClickListener(event -> delete());
         this.mainView = mainView;
@@ -41,21 +40,21 @@ public class CountryForm extends FormLayout {
     }
 
     private void save() {
-        CountryRaw countryRaw = new CountryRaw();
-        countryRaw.setCountryType(type.getValue());
-/*        countryRaw.setDate("dsdasda");
-        countryRaw.setCovidGrow("dsda");*/
+/*        CountryRaw countryRaw = new CountryRaw();
+        countryRaw.setCountryName(type.getValue());
+*//*        countryRaw.setDate("dsdasda");
+        countryRaw.setCovidGrow("dsda");*//*
         countryRawService.save(countryRaw);
-        mainView.refresh();
+        mainView.refresh();*/
     }
 
     private void delete() {
-        CountryRaw countryRaw = new CountryRaw();
-        countryRaw.setCountryType(type.getValue());
-/*        countryRaw.setDate("dsdasda");
-        countryRaw.setCovidGrow("dsda");*/
+/*        CountryRaw countryRaw = new CountryRaw();
+        countryRaw.setCountryName(type.getValue());
+*//*        countryRaw.setDate("dsdasda");
+        countryRaw.setCovidGrow("dsda");*//*
         countryRawService.delete(countryRaw);
-        mainView.refresh();
+        mainView.refresh();*/
     }
 
 }

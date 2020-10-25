@@ -1,5 +1,6 @@
 package com.kodilla.covid_front;
 
+import com.kodilla.covid_front.client.CountryClient;
 import com.kodilla.covid_front.client.UserClient;
 import com.kodilla.covid_front.domain.CountryRaw;
 import com.kodilla.covid_front.service.CountryRawService;
@@ -16,10 +17,12 @@ public class MainView extends VerticalLayout {
 
     @Autowired
     private UserClient userClient;
+    @Autowired
+    private CountryClient countryClient;
 
     private CountryRawService countryRawService = CountryRawService.getInstance();
     private Grid grid = new Grid<>(CountryRaw.class);
-    private CountryForm form = new CountryForm(this);
+    private CountryForm form;
     private Button loginButton = new Button("LOGIN");
     private Button refreshButton = new Button("REFRESH");
     private Button addUser = new Button("ADD USER");
@@ -31,20 +34,29 @@ public class MainView extends VerticalLayout {
 
     public MainView() {
         grid.setVisible(false);
-        form.setVisible(false);
         refreshButton.setVisible(false);
         newUserNameTextField.setVisible(false);
         newUserPasswordTextField.setVisible(false);
         saveUser.setVisible(false);
 //        loginButton.addClickListener(e -> {grid.asSingleSelect().clear();
         loginButton.addClickListener(e -> {
-        boolean result = userClient.validateUser(userNameLoginField.getValue(),
+        String userId = userClient.validateUser(userNameLoginField.getValue(),
                     userPasswordField.getValue());
 //            userClient.getUserFullView(userNameLoginField.getValue());
-            grid.setVisible(result);
-            form.setVisible(result);
-            refreshButton.setVisible(result);;
-            addUser.setVisible(result);});
+            if (form == null){
+                form = new CountryForm(this, countryClient);
+                HorizontalLayout mainContent = new HorizontalLayout(form);
+                mainContent.setSizeFull();
+                grid.setSizeFull();
+                grid.asSingleSelect().addValueChangeListener(event -> form.setCountryRaw((CountryRaw) grid.asSingleSelect().getValue()));
+                add(grid, mainContent);
+            }
+            boolean setVisible = userId != null;
+            refresh(userId);
+            grid.setVisible(setVisible);
+            form.setVisible(setVisible);
+            refreshButton.setVisible(setVisible);;
+            addUser.setVisible(setVisible);});
         addUser.addClickListener(e -> {
             newUserNameTextField.setVisible(true);
             newUserPasswordTextField.setVisible(true);
@@ -63,20 +75,16 @@ public class MainView extends VerticalLayout {
         newUserNameTextField.setClearButtonVisible(true);
         newUserPasswordTextField.setPlaceholder("Enter password");
         newUserPasswordTextField.setClearButtonVisible(true);
-        grid.setColumns("countryType", "date", "date_1", "date_2", "date_3", "date_4");
+        grid.setColumns("countryName", "date", "date_1", "date_2", "date_3", "date_4");
         HorizontalLayout toolbar = new HorizontalLayout(userNameLoginField, userPasswordField, loginButton, addUser, refreshButton, newUserNameTextField, newUserPasswordTextField, saveUser);
-        HorizontalLayout mainContent = new HorizontalLayout(form);
-        mainContent.setSizeFull();
-        grid.setSizeFull();
-        grid.asSingleSelect().addValueChangeListener(event -> form.setCountryRaw((CountryRaw) grid.asSingleSelect().getValue()));
+        add(toolbar);
 
-        add(toolbar, grid, mainContent);
         setSizeFull();
 
     }
 
-    public void refresh() {
-        grid.setItems(countryRawService.getCountryRawSet());
+    public void refresh(String userId) {
+        grid.setItems(countryRawService.getCountryRawSet(userId, userClient));
     }
 
 }

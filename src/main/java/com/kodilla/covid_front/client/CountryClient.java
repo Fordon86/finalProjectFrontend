@@ -18,13 +18,11 @@ public class CountryClient {
 
 
     public List<CountryDto> getCountrys () {
-        CountryDto countryList = restTemplate.getForObject(
+        List<CountryDto> countryList = restTemplate.getForObject(
                 "http://localhost:8081/getCountryList",
-                CountryDto.class);
+                List.class);
         if (countryList != null) {
-            List<CountryDto>  countryDtoList = new ArrayList<>();
-            countryDtoList.add(countryList);
-            return countryDtoList;
+            return countryList;
         }
         return null;
     }
