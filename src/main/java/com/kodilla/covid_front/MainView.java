@@ -11,10 +11,13 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
 
 @Route
 public class MainView extends VerticalLayout {
 
+    @Autowired
+    private RestTemplate restTemplate;
     @Autowired
     private UserClient userClient;
     @Autowired
@@ -44,7 +47,7 @@ public class MainView extends VerticalLayout {
                     userPasswordField.getValue());
 //            userClient.getUserFullView(userNameLoginField.getValue());
             if (form == null){
-                form = new CountryForm(this, countryClient);
+                form = new CountryForm(this, countryClient, userId, restTemplate);
                 HorizontalLayout mainContent = new HorizontalLayout(form);
                 mainContent.setSizeFull();
                 grid.setSizeFull();

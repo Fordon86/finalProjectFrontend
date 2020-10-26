@@ -37,7 +37,6 @@ public class UserClient {
             userFullViewDto.getMapCountryCovidGrow().size();
             return userFullViewDto;
         }
-
         return null;
     }
 
