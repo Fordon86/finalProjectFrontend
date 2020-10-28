@@ -14,4 +14,5 @@ public class CovidDto {
     private String country;
     private String date;
     private int cases;
+
 }

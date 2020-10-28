@@ -11,4 +11,5 @@ public class CountryRaw {
     private int day_after_tomorrow_grow;
     private int date_3;
     private int date_4;
+
 }
