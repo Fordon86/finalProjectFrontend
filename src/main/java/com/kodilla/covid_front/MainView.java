@@ -41,17 +41,14 @@ public class MainView extends VerticalLayout {
         newUserNameTextField.setVisible(false);
         newUserPasswordTextField.setVisible(false);
         saveUser.setVisible(false);
-//        loginButton.addClickListener(e -> {grid.asSingleSelect().clear();
         loginButton.addClickListener(e -> {
         String userId = userClient.validateUser(userNameLoginField.getValue(),
                     userPasswordField.getValue());
-//            userClient.getUserFullView(userNameLoginField.getValue());
             if (form == null){
                 form = new CountryForm(this, countryClient, userId, restTemplate);
                 HorizontalLayout mainContent = new HorizontalLayout(form);
                 mainContent.setSizeFull();
                 grid.setSizeFull();
-                grid.asSingleSelect().addValueChangeListener(event -> form.setCountryRaw((CountryRaw) grid.asSingleSelect().getValue()));
                 add(grid, mainContent);
             }
             boolean setVisible = userId != null;
@@ -59,7 +56,7 @@ public class MainView extends VerticalLayout {
             grid.setVisible(setVisible);
             form.setVisible(setVisible);
             refreshButton.setVisible(setVisible);;
-            addUser.setVisible(setVisible);});
+            addUser.setVisible(!setVisible);});
         addUser.addClickListener(e -> {
             newUserNameTextField.setVisible(true);
             newUserPasswordTextField.setVisible(true);
@@ -78,16 +75,15 @@ public class MainView extends VerticalLayout {
         newUserNameTextField.setClearButtonVisible(true);
         newUserPasswordTextField.setPlaceholder("Enter password");
         newUserPasswordTextField.setClearButtonVisible(true);
-        grid.setColumns("countryName", "date", "date_1", "date_2", "date_3", "date_4");
+        grid.setColumns("countryName", "total_cases", "tomorrow_grow", "day_after_tomorrow_grow", "date_3", "date_4");
         HorizontalLayout toolbar = new HorizontalLayout(userNameLoginField, userPasswordField, loginButton, addUser, refreshButton, newUserNameTextField, newUserPasswordTextField, saveUser);
+        grid.asSingleSelect().addValueChangeListener(event -> form.setCountryRaw((CountryRaw) grid.asSingleSelect().getValue()));
         add(toolbar);
 
         setSizeFull();
-
     }
 
     public void refresh(String userId) {
         grid.setItems(countryRawService.getCountryRawSet(userId, userClient));
     }
-
 }

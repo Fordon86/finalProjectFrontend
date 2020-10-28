@@ -14,5 +14,4 @@ public class UserFullViewDto {
     private Map<String, List<CovidDto>> mapCountryCovidGrow = new HashMap<>();
 //    private Map<Integer, List<AccuweatherDto>> mapCountryTemperature = new HashMap<>();
     private String userId;
-
 }

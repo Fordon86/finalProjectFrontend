@@ -12,7 +12,6 @@ import java.util.Set;
 
 public class CountryRawService {
 
-    private Set<CountryRaw> countryRawSet = new HashSet<>();
     private static CountryRawService countryRawService;
 
     private CountryRawService() {
@@ -25,14 +24,6 @@ public class CountryRawService {
         return countryRawService;
     }
 
-    public void save(CountryRaw countryRaw) {
-        this.countryRawSet.add(countryRaw);
-    }
-
-    public void delete(CountryRaw countryRaw) {
-        this.countryRawSet.remove(countryRaw);
-    }
-
     public Set<CountryRaw> getCountryRawSet(String userId, UserClient userClient) {
         Set<CountryRaw> countryRaws = new HashSet<>();
         UserFullViewDto userFullView = userClient.getUserFullView(userId);
@@ -41,14 +32,13 @@ public class CountryRawService {
             List<CovidDto> covidDtoList = countryCovidGrow.get(key);
             CountryRaw countryRaw = new CountryRaw();
             countryRaw.setCountryName(key);
-            countryRaw.setDate(covidDtoList.get(0).getCases());
-            countryRaw.setDate_1(covidDtoList.get(1).getCases());
-            countryRaw.setDate_2(covidDtoList.get(2).getCases());
-            countryRaw.setDate_3(covidDtoList.get(3).getCases());
-            countryRaw.setDate_4(covidDtoList.get(4).getCases());
+            countryRaw.setTotal_cases(covidDtoList.get(0).getCases());
+            countryRaw.setTomorrow_grow(covidDtoList.get(1).getCases() - covidDtoList.get(0).getCases());
+            countryRaw.setDay_after_tomorrow_grow(covidDtoList.get(2).getCases() - covidDtoList.get(1).getCases());
+            countryRaw.setDate_3(covidDtoList.get(3).getCases() - covidDtoList.get(2).getCases());
+            countryRaw.setDate_4(covidDtoList.get(4).getCases() - covidDtoList.get(3).getCases());
             countryRaws.add(countryRaw);
         }
         return countryRaws;
     }
-
 }

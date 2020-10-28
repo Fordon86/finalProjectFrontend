@@ -4,7 +4,6 @@ import com.kodilla.covid_front.client.CountryClient;
 import com.kodilla.covid_front.domain.CountryRaw;
 import com.kodilla.covid_front.dto.CountryDto;
 import com.kodilla.covid_front.dto.UserDto;
-import com.kodilla.covid_front.service.CountryRawService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -21,7 +20,6 @@ public class CountryForm extends FormLayout {
 
     private Button addToList = new Button("Add country to the list");
     private Button deleteFromList = new Button ("Delete country from list");
-    private CountryRawService countryRawService = CountryRawService.getInstance();
     private ComboBox<CountryDto> comboBox = new ComboBox<>();
     private String userId;
     private MainView mainView;
@@ -55,12 +53,10 @@ public class CountryForm extends FormLayout {
     }
 
     private void delete() {
-/*        CountryRaw countryRaw = new CountryRaw();
-        countryRaw.setCountryName(type.getValue());
-*//*        countryRaw.setDate("dsdasda");
-        countryRaw.setCovidGrow("dsda");*//*
-        countryRawService.delete(countryRaw);
-        mainView.refresh();*/
+        String countryId = String.valueOf(comboBox.getValue().getCountryId());
+        UserDto user = restTemplate.getForObject(
+                "http://localhost:8081/deleteCountry?userId=" + userId + "&countryId=" + countryId,
+                UserDto.class);
+        mainView.refresh(userId);
     }
-
 }
