@@ -1,5 +1,5 @@
 --- OPIS PROJEKTU ---
-Celem projektu było napisanie aplikacji która na podstawie przewidywanego wzrostu zachorowań na COVID oraz przewidywanej temperatur pomoże nam wybrać kraj do którego możemy bezpiecznie pojechać na wakacje.
+Celem projektu było napisanie aplikacji która na podstawie przewidywanego wzrostu zachorowań na COVID oraz przewidywanej temperatur pomoże nam wybrać kraj do którego możemy bezpiecznie pojechać na wakacje. Aplikacja nie jest dokończona. Kod w części backendowej jest częściowo zakomendowany - jestem w trakcie pisania obsługi API accuweather.
 
 Aplikacja korzysta z dwóch zewnętrznych API:
 - https://covid19-api.org/
